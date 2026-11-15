@@ -25,8 +25,6 @@ Alle Texte, Öffnungszeiten, Marken und Angebote stehen in `build/content.mjs`, 
 node build/build.mjs
 ```
 
-Danach den Ordner (ohne `build/`, `img/src/`, `shots/` und `.taste-skill/`) auf den Webserver laden.
-
 ## Hochladen
 
 Den Ordner ohne `build/`, `img/src/`, `shots/`, `.taste-skill/` und `README.md` auf den Webserver laden.

@@ -13,16 +13,9 @@ const HAUPT_HREF = 'kontakt.html#termin';
 const arrow = '<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg>';
 const chev = '<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const img = (n) => `img/${n}.jpg`;
-const LOGOS = { 'Linn': 'linn', 'Meridian': 'meridian', 'Sonos': 'sonos', 'KEF': 'kef', 'JBL': 'jbl', 'Piega': 'piega', 'Cambridge Audio': 'cambridge-audio', 'Rega': 'rega', 'Pro-Ject': 'pro-ject', 'Audiolab': 'audiolab' };
 const brandRow = (c, [name, claim, text]) => `            <li class="brand-row">
               <div class="brand-row__text"><h3><a class="link" href="anfrage.html?bereich=${c.slug}&amp;marke=${encodeURIComponent(name)}">${name}</a></h3><p>${text}</p></div>
             </li>`;
-const brandCard = (c, [name, claim, text]) => `        <article class="brand-card span-4">
-          <div class="brand-card__logo">${LOGOS[name] ? `<img src="img/logos/${LOGOS[name]}.png" alt="${name} Logo" loading="lazy">` : `<span class="brand-card__word">${name}</span>`}</div>
-          <h3>${name}</h3>
-          <p>${text}</p>
-          <a class="link" href="anfrage.html?bereich=${c.slug}&amp;marke=${encodeURIComponent(name)}">Infos zu ${name}</a>
-        </article>`;
 
 const hoursDl = (cls = 'hours') => `<dl class="${cls}" data-tz="Europe/Vienna">${zeiten.map(z => `<dt data-days="${z.days}">${z.label}</dt><dd>${z.value}</dd>`).join('')}</dl>`;
 
