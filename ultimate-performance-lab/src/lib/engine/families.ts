@@ -218,7 +218,7 @@ export const FAMILIES: FamilyDef[] = [
   {
     id: "mb-m139-phev", name: "Mercedes-AMG M139l Plug-in-Hybrid", kind: "phev", confidence: "niedrig",
     anchors: [[680, 730, 1060, 750, 1080, 800, 1100, 880, 1150]],
-    internalsNm: 660, internalsBuiltNm: 850,
+    internalsNm: 1120, internalsBuiltNm: 1300,
     weaknesses: ["Systemleistung nur mit geladener Hochvoltbatterie.", "Komplexes Zusammenspiel aus E-Lader, E-Maschine und Verbrenner; kaum dokumentierte Umbauten."],
     fuelNote: SUPER_FUEL,
   },

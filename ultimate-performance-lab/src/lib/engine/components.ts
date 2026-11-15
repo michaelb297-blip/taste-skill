@@ -273,7 +273,7 @@ export function evaluateConfig(v: Vehicle, model: TuningModel, cfg: Config): Eva
     } else {
       caps.push([k === "sc-petrol" ? "Kompressor" : "Turbolader", [T.stage2.ps, T.stage3s.ps, T.stage3x.ps][ch]]);
       caps.push(["Abgasanlage", [T.stage1.ps, T.stage3s.ps, INF][ex]]);
-      caps.push(["Ansaugung", inT ? INF : T.stage1.ps * 1.03]);
+      caps.push(["Ansaugung", inT ? INF : T.stage1.ps * 1.04]);
       caps.push(["Kraftstoffsystem", [T.stage2.ps * 1.03, T.stage3s.ps * 1.02, INF][fu]]);
     }
     caps.push(["Software", sw === 1 ? T.stage2.ps : INF]);
@@ -281,7 +281,7 @@ export function evaluateConfig(v: Vehicle, model: TuningModel, cfg: Config): Eva
     ps = Math.max(stockPs, min);
     for (const [name, cap] of caps) if (cap <= min * 1.005 && cap < T.stage3x.ps) limitedBy.push(name);
     // Ladeluftkühlung: oberhalb von Stage 1 kostet der Serienkühler Leistung
-    if (k !== "na-petrol" && ic === 0 && ps > T.stage1.ps * 1.02) {
+    if (k !== "na-petrol" && ic === 0 && ps > T.stage1.ps * 1.06) {
       ps *= 0.965;
       issues.push({ level: "warn", text: "Der Serien-Ladeluftkühler ist oberhalb von Stage 1 thermisch überfordert: Ansauglufttemperatur steigt, die Motorsteuerung nimmt Zündwinkel zurück (rund 3–4 % weniger Leistung, stärker bei Dauerlast)." });
     }
