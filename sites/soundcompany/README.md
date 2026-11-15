@@ -36,17 +36,13 @@ Schon erledigt: Schrift lokal eingebunden, Canonical-Links und Teilen-Vorschau (
 www.soundcompany.co.at, strukturierte Daten für Google (Adresse, Öffnungszeiten), `sitemap.xml`,
 `robots.txt`, 404-Seite, App-Icon.
 
-## Noch offen (braucht Angaben vom Inhaber)
+## Entscheidungen des Inhabers (November 2026)
 
-1. **Formulare:** Sie öffnen derzeit das E-Mail-Programm der Besucher mit einer fertigen Nachricht an
-   office@soundcompany.co.at. Für Absenden direkt auf der Seite einen Formular-Dienst einrichten
-   (zum Beispiel Formspree oder das Formular des Hosters) und dessen Adresse in `data-endpoint` der
-   beiden Formulare eintragen (`build/build.mjs`, `anfrageForm` und `terminForm`), dann neu bauen.
-2. **Datenschutzerklärung:** Absatz 6 nennt den Hoster noch nicht beim Namen. Name und Anschrift
-   ergänzen und die Erklärung rechtlich prüfen lassen. Bei einem Formular-Dienst diesen ebenfalls nennen.
-3. **Öffnungszeiten prüfen:** Die alte Startseite sagte „Mittwoch bis Samstag 13 bis 18 Uhr“, die alte
-   Kontaktseite „Mi–Fr 13–19, Sa 13–18“. Übernommen wurde die Kontaktseite (`build/content.mjs`, `zeiten`,
-   dazu die strukturierten Daten in `build/build.mjs`, `LD`).
-4. **Fotos:** Ein Foto vom Geschäft selbst (Schaufenster, Vorführräume, Team) fehlt noch.
-5. **Bildrechte:** Produktfotos von Linn und Meridian sowie zwei Adobe-Stock-Fotos stammen von der
-   bisherigen Website. Lizenz für die neue Website bestätigen.
+- Die Seite ist eine Probe und geht vorerst nicht live.
+- Formulare bleiben beim E-Mail-Versand (`mailto:office@soundcompany.co.at`), kein Formular-Dienst.
+- Öffnungszeiten wie übernommen: Mo und Di nach Vereinbarung, Mi–Fr 13–19, Sa 13–18, So geschlossen.
+- Ein Foto vom Geschäft gibt es derzeit nicht; die Seite zeigt Produkt- und Raumfotos.
+- Die Rechte an allen verwendeten Fotos liegen bei der SOUND COMPANY.
+
+Falls die Seite doch live geht: Hoster in Absatz 6 der Datenschutzerklärung nennen und die Erklärung
+rechtlich prüfen lassen.
