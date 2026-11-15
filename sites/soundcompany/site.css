@@ -120,7 +120,7 @@
 
 /* Markenliste auf den Kategorieseiten: Logo links, Text rechts, Linien dazwischen */
 .brand-rows { list-style: none; margin: 0; padding: 0; display: grid; }
-.brand-row { display: grid; grid-template-columns: minmax(0, 1fr) 120px; gap: var(--s-5); padding: var(--s-4) 0; border-top: 1px solid var(--line); align-items: start; }
+.brand-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-5); padding: var(--s-3) 0; border-top: 1px solid var(--line); align-items: start; }
 .brand-row:first-child { border-top: 0; padding-top: 0; }
 .brand-rows.span-6:nth-child(2) > .brand-row:first-child, .group + .grid .brand-row:first-child { border-top: 1px solid var(--line); padding-top: var(--s-4); }
 .brand-row__logo { order: 2; height: 32px; display: flex; align-items: center; justify-content: flex-end; }
@@ -129,7 +129,7 @@
 .brand-row__text h3 { margin: 0 0 var(--s-1); font: 600 18px/1.4 var(--font-text); }
 .brand-row__text p { margin: 0; }
 .brand-row__text .link { display: inline-block; margin-top: var(--s-2); }
-@media (max-width: 639px) { .brand-row { grid-template-columns: minmax(0, 1fr) 88px; gap: var(--s-3); } .brand-row__logo img { max-width: 84px; } }
+
 
 /* Abschnitte, die mit ihrem Inhalt wachsen (Formular, Rechtstexte) */
 main > section.free { height: auto !important; min-height: 100svh; }

@@ -1,0 +1,14 @@
+# Netlify / Cloudflare Pages: Weiterleitungen von den Adressen der alten Website
+/hi-fi-systeme                 /hifi-systeme.html    301
+/hi-fi-systeme/lautsprecher    /lautsprecher.html    301
+/hi-fi-systeme/stereo          /stereo.html          301
+/hi-fi-systeme/heimkino        /heimkino.html        301
+/hi-fi-systeme/streaming       /streaming.html       301
+/hi-fi-systeme/plattenspieler  /plattenspieler.html  301
+/leistungen                    /leistungen.html      301
+/exklusive-angebote            /angebote.html        301
+/anfrage                       /anfrage.html         301
+/kontakt                       /kontakt.html         301
+/impressum                     /impressum.html       301
+/datenschutz                   /datenschutz.html     301
+/linn                          /                     301

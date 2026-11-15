@@ -1,0 +1,16 @@
+# Apache: Fehlerseite und Weiterleitungen von den Adressen der alten Website (HEROLD)
+ErrorDocument 404 /404.html
+RewriteEngine On
+RewriteRule ^hi-fi-systeme/?$ /hifi-systeme.html [R=301,L]
+RewriteRule ^hi-fi-systeme/lautsprecher/?$ /lautsprecher.html [R=301,L]
+RewriteRule ^hi-fi-systeme/stereo/?$ /stereo.html [R=301,L]
+RewriteRule ^hi-fi-systeme/heimkino/?$ /heimkino.html [R=301,L]
+RewriteRule ^hi-fi-systeme/streaming/?$ /streaming.html [R=301,L]
+RewriteRule ^hi-fi-systeme/plattenspieler/?$ /plattenspieler.html [R=301,L]
+RewriteRule ^leistungen/?$ /leistungen.html [R=301,L]
+RewriteRule ^exklusive-angebote/?$ /angebote.html [R=301,L]
+RewriteRule ^anfrage/?$ /anfrage.html [R=301,L]
+RewriteRule ^kontakt/?$ /kontakt.html [R=301,L]
+RewriteRule ^impressum/?$ /impressum.html [R=301,L]
+RewriteRule ^datenschutz/?$ /datenschutz.html [R=301,L]
+RewriteRule ^linn/?$ / [R=301,L]

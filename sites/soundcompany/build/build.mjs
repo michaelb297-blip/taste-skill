@@ -1,6 +1,6 @@
 // Baut alle Seiten der Sound-Company-Website als statisches HTML in den Ordner darüber.
 // Aufruf: node build/build.mjs
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { firma, zeiten, zeitenKurz, kategorien, alleMarken, angebote, stimmen } from './content.mjs';
@@ -15,7 +15,6 @@ const chev = '<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="
 const img = (n) => `img/${n}.jpg`;
 const LOGOS = { 'Linn': 'linn', 'Meridian': 'meridian', 'Sonos': 'sonos', 'KEF': 'kef', 'JBL': 'jbl', 'Piega': 'piega', 'Cambridge Audio': 'cambridge-audio', 'Rega': 'rega', 'Pro-Ject': 'pro-ject', 'Audiolab': 'audiolab' };
 const brandRow = (c, [name, claim, text]) => `            <li class="brand-row">
-              <div class="brand-row__logo">${LOGOS[name] ? `<img src="img/logos/${LOGOS[name]}.png" alt="${name} Logo" loading="lazy">` : `<span class="brand-row__word">${name}</span>`}</div>
               <div class="brand-row__text"><h3><a class="link" href="anfrage.html?bereich=${c.slug}&amp;marke=${encodeURIComponent(name)}">${name}</a></h3><p>${text}</p></div>
             </li>`;
 const brandCard = (c, [name, claim, text]) => `        <article class="brand-card span-4">
@@ -29,7 +28,10 @@ const hoursDl = (cls = 'hours') => `<dl class="${cls}" data-tz="Europe/Vienna">$
 
 // ---------- Kopf, Navigation, Footer ----------
 
-function head({ title, description, moments = [] }) {
+const SITE = 'https://www.soundcompany.co.at/';
+
+function head({ title, description, moments = [], file = 'index.html', jsonld = '' }) {
+  const url = SITE + (file === 'index.html' ? '' : file);
   const mo = moments.length
     ? `<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
 <link rel="modulepreload" href="assets/moments/moments.js">
@@ -46,17 +48,19 @@ ${moments.map(m => `<link rel="modulepreload" href="assets/moments/${m}/moment.j
 <meta property="og:type" content="website">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${description}">
-<meta property="og:image" content="share.jpg">
+<meta property="og:image" content="${SITE}share.jpg">
+<meta property="og:url" content="${url}">
+<meta property="og:locale" content="de_AT">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta name="theme-color" content="#ffffff">
-<!-- <link rel="canonical" href="https://www.soundcompany.co.at/"> sobald die neue Seite dort liegt -->
+<link rel="canonical" href="${url}">
 <meta name="site-kind" content="other">
 <meta name="page-type" content="place">
 <meta name="page-kind" content="place">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/instrument-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="assets/system.css">
 <link rel="stylesheet" href="assets/ui/cards.css">
 <link rel="stylesheet" href="assets/motion/motion.css">
@@ -79,7 +83,7 @@ ${moments.map(m => `<link rel="modulepreload" href="assets/moments/${m}/moment.j
 <script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
 <script src="assets/backgrounds/backgrounds.js"></script>
 ${mo}
-</head>`;
+${jsonld}</head>`;
 }
 
 const NAV = [
@@ -177,8 +181,8 @@ ${cta}
 `;
 }
 
-function page({ file, title, description, current, moments, comment, main, close }) {
-  const html = `${head({ title, description, moments })}
+function page({ file, title, description, current, moments, comment, main, close, jsonld = '' }) {
+  const html = `${head({ title, description, moments, file, jsonld })}
 <body>
 <!-- ${comment} -->
 ${nav(current)}
@@ -211,12 +215,27 @@ const tile = (k, cls, ratio = '') => `          <a class="tile ${cls}${['streami
             <p>${k.kurz}</p>
           </a>`;
 
+// ---------- Strukturierte Daten (Google: Geschäft, Adresse, Öffnungszeiten) ----------
+
+const LD = `<script type="application/ld+json">${JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'ElectronicsStore', name: firma.name, legalName: firma.rechtsname,
+  url: SITE, logo: SITE + 'img/logo-dunkel.png', image: SITE + 'share.jpg', telephone: firma.telefon, email: firma.email,
+  address: { '@type': 'PostalAddress', streetAddress: firma.strasse, postalCode: '1070', addressLocality: 'Wien', addressCountry: 'AT' },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday', 'Thursday', 'Friday'], opens: '13:00', closes: '19:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '13:00', closes: '18:00' },
+  ],
+  priceRange: '€€–€€€€', brand: ['Linn', 'Meridian', 'Sonos', 'Lyngdorf', 'KEF', 'Rega'],
+})}</script>
+`;
+
 // ---------- Startseite ----------
 
 const k = Object.fromEntries(kategorien.map(x => [x.slug, x]));
 
 page({
   file: 'index.html',
+  jsonld: LD,
   title: 'SOUND COMPANY: HiFi-Fachgeschäft in der Westbahnstraße, Wien',
   description: 'Stereo, Streaming, Heimkino und Plattenspieler zum Probehören in 34 Vorführ-Zonen in Wien-Neubau, mit Planung und Installation.',
   current: '',
@@ -564,6 +583,7 @@ const terminForm = `<form class="form" id="termin-form" action="mailto:${firma.e
 
 page({
   file: 'kontakt.html',
+  jsonld: LD,
   title: 'Kontakt und Öffnungszeiten | SOUND COMPANY, Westbahnstraße 22, Wien',
   description: 'So erreichen Sie das HiFi-Fachgeschäft SOUND COMPANY in 1070 Wien: Adresse, Telefon, E-Mail, Öffnungszeiten und Hörtermin.',
   current: 'kontakt',
@@ -659,11 +679,42 @@ legal('datenschutz.html', 'Datenschutzerklärung | SOUND COMPANY Wien', 'Wie die
         <p>Die Formulare dieser Website öffnen Ihr E-Mail-Programm mit einer Nachricht an ${firma.email}. Ihre Angaben erreichen uns erst, wenn Sie diese E-Mail absenden. Wir speichern Anfragen nur so lange, wie es für die Bearbeitung und gesetzliche Aufbewahrungspflichten nötig ist.</p>
         <h2>4. Cookies und Tracking</h2>
         <p>Diese Website setzt keine Cookies und verwendet keine Analyse- oder Werbedienste.</p>
-        <h2>5. Schriften</h2>
-        <p>Die Schrift „Instrument Sans“ wird von Google Fonts geladen. Dabei wird Ihre IP-Adresse an Google übertragen. <!-- Vor dem Livegang: Schrift lokal einbinden und diesen Absatz entfernen. --></p>
+        <h2>5. Schriften und Inhalte Dritter</h2>
+        <p>Alle Schriften und Bilder liegen auf unserem eigenen Server. Beim Aufruf der Website werden keine Daten an Google oder andere Dritte übertragen.</p>
         <h2>6. Hosting</h2>
         <p>Die Website wird bei einem externen Dienstleister in der EU gehostet, mit dem ein Auftragsverarbeitungsvertrag nach Art 28 DSGVO besteht. <!-- Vor dem Livegang: Name und Anschrift des Hosters ergänzen. --></p>
         <h2>7. Ihre Rechte</h2>
         <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch (Art 15 bis 21 DSGVO). Wenn Sie meinen, dass wir Ihre Daten nicht rechtmäßig verarbeiten, können Sie sich bei der österreichischen Datenschutzbehörde beschweren (<a class="link" href="https://www.dsb.gv.at">www.dsb.gv.at</a>).</p>
         <h2>8. Kontakt</h2>
         <p>${firma.name} by ${firma.rechtsname}<br>${firma.strasse}, ${firma.ort}<br><a class="link" href="${firma.telefonHref}">${firma.telefon}</a><br><a class="link" href="mailto:${firma.email}">${firma.email}</a></p>`);
+
+// ---------- 404, Sitemap, robots ----------
+
+page({
+  file: '404.html',
+  title: 'Seite nicht gefunden | SOUND COMPANY Wien',
+  description: 'Diese Seite gibt es nicht mehr. Hier geht es zu den Produkten, Angeboten und zum Kontakt der SOUND COMPANY.',
+  current: '', moments: [],
+  comment: 'type: place. Fehlerseite.',
+  main: `  <section class="section legal free" aria-labelledby="legal-h">
+    <div class="wrap">
+      <div class="legal__body measure">
+        <h1 id="legal-h">Diese Seite gibt es nicht mehr</h1>
+        <p>Vielleicht hat sich die Adresse mit der neuen Website geändert. Hier finden Sie alles Wichtige:</p>
+        <ul class="rows">${[['index.html', 'Startseite'], ['hifi-systeme.html', 'HiFi-Systeme'], ['leistungen.html', 'Leistungen'], ['angebote.html', 'Exklusive Angebote'], ['kontakt.html', 'Kontakt und Öffnungszeiten']].map(([h, t]) => `<li><span class="rows__name"><a class="link" href="${h}">${t}</a></span></li>`).join('')}</ul>
+      </div>
+    </div>
+  </section>`,
+  close: { h2: 'Wir helfen gerne weiter', line: zeitenKurz },
+});
+
+const seiten = ['index.html', 'hifi-systeme.html', ...kategorien.map(c => `${c.slug}.html`), 'leistungen.html', 'angebote.html', 'anfrage.html', 'kontakt.html', 'impressum.html', 'datenschutz.html'];
+writeFileSync(join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${seiten.map(f => `  <url><loc>${SITE}${f === 'index.html' ? '' : f}</loc></url>`).join('\n')}
+</urlset>
+`);
+writeFileSync(join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE}sitemap.xml\n`);
+// die Fehlerseite wird unter beliebigen Pfaden ausgeliefert: alle Links ab der Wurzel
+writeFileSync(join(OUT, '404.html'), readFileSync(join(OUT, '404.html'), 'utf8').replace('<head>\n', '<head>\n<base href="/">\n').replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"'));
+console.log('geschrieben: 404.html, sitemap.xml, robots.txt');

@@ -27,19 +27,28 @@ node build/build.mjs
 
 Danach den Ordner (ohne `build/`, `img/src/`, `shots/` und `.taste-skill/`) auf den Webserver laden.
 
-## Vor dem Livegang
+## Hochladen
 
-1. **Formulare:** Sie öffnen derzeit das E-Mail-Programm (`mailto:office@soundcompany.co.at`).
-   Für echtes Absenden einen Formular-Dienst einrichten und dessen Adresse in `data-endpoint`
-   der beiden Formulare eintragen (`build/build.mjs`, `anfrageForm` und `terminForm`).
-2. **Schrift lokal einbinden:** „Instrument Sans“ kommt von Google Fonts (DSGVO-Thema in Österreich).
-   Schriftdateien herunterladen, lokal einbinden und den Absatz 5 in der Datenschutzerklärung entfernen.
-3. **Datenschutzerklärung:** Hoster mit Name und Anschrift ergänzen (Absatz 6) und rechtlich prüfen lassen.
-4. **Öffnungszeiten prüfen:** Die alte Startseite sagte „Mittwoch bis Samstag 13 bis 18 Uhr“, die alte
-   Kontaktseite „Mi–Fr 13–19, Sa 13–18“. Übernommen wurde die Kontaktseite.
-5. **Fotos:** Es gibt noch kein Foto vom Geschäft selbst (Schaufenster, Vorführräume, Team).
-   Eigene Fotos würden die Seite deutlich persönlicher machen.
-6. **Bildrechte:** Produktfotos von Linn und Meridian sowie zwei Adobe-Stock-Fotos stammen von der
+Den Ordner ohne `build/`, `img/src/`, `shots/`, `.taste-skill/` und `README.md` auf den Webserver laden.
+Die Adressen der alten Website werden umgeleitet: `.htaccess` für Apache-Hosting, `_redirects` für
+Netlify oder Cloudflare Pages. Schrift, Bilder und Skripte liegen alle lokal, es werden keine Dienste
+Dritter geladen.
+
+Schon erledigt: Schrift lokal eingebunden, Canonical-Links und Teilen-Vorschau (`share.jpg`) für
+www.soundcompany.co.at, strukturierte Daten für Google (Adresse, Öffnungszeiten), `sitemap.xml`,
+`robots.txt`, 404-Seite, App-Icon.
+
+## Noch offen (braucht Angaben vom Inhaber)
+
+1. **Formulare:** Sie öffnen derzeit das E-Mail-Programm der Besucher mit einer fertigen Nachricht an
+   office@soundcompany.co.at. Für Absenden direkt auf der Seite einen Formular-Dienst einrichten
+   (zum Beispiel Formspree oder das Formular des Hosters) und dessen Adresse in `data-endpoint` der
+   beiden Formulare eintragen (`build/build.mjs`, `anfrageForm` und `terminForm`), dann neu bauen.
+2. **Datenschutzerklärung:** Absatz 6 nennt den Hoster noch nicht beim Namen. Name und Anschrift
+   ergänzen und die Erklärung rechtlich prüfen lassen. Bei einem Formular-Dienst diesen ebenfalls nennen.
+3. **Öffnungszeiten prüfen:** Die alte Startseite sagte „Mittwoch bis Samstag 13 bis 18 Uhr“, die alte
+   Kontaktseite „Mi–Fr 13–19, Sa 13–18“. Übernommen wurde die Kontaktseite (`build/content.mjs`, `zeiten`,
+   dazu die strukturierten Daten in `build/build.mjs`, `LD`).
+4. **Fotos:** Ein Foto vom Geschäft selbst (Schaufenster, Vorführräume, Team) fehlt noch.
+5. **Bildrechte:** Produktfotos von Linn und Meridian sowie zwei Adobe-Stock-Fotos stammen von der
    bisherigen Website. Lizenz für die neue Website bestätigen.
-7. **Canonical-Link:** in `build/build.mjs` (Kopf) einschalten, sobald die Seite unter
-   www.soundcompany.co.at liegt.
