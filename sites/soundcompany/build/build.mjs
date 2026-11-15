@@ -395,19 +395,17 @@ for (const c of kategorien) {
       <div class="group">
         <div class="section-head"><h2 id="marken-h">${c.marken.length} Marken für ${c.name === 'Heimkino' ? 'Ihr Heimkino' : c.name}</h2><p>${c.intro}</p></div>
         <div class="grid grid--top">
-          <ul class="brand-rows span-7">
+          <ul class="brand-rows span-6">
 ${c.marken.slice(0, 4).map(m => brandRow(c, m)).join('\n')}
           </ul>
-          <figure class="pl-photo pl-photo--end span-5 start-8" style="--pl-r: .8; --pl-head: 200px"><img src="${img(c.bild)}" alt="${c.bildAlt}" loading="lazy" data-source="client" data-subject="${c.name}"></figure>
+          <figure class="pl-photo pl-photo--end span-6 start-7" style="--pl-r: 1; --pl-head: 200px"><img src="${img(c.bild)}" alt="${c.bildAlt}" loading="lazy" data-source="client" data-subject="${c.name}"></figure>
         </div>
       </div>${c.marken.length > 4 ? `
       <div class="grid grid--top">
         <ul class="brand-rows span-6">
-${c.marken.slice(4, 4 + Math.ceil((c.marken.length - 4) / 2)).map(m => brandRow(c, m)).join('\n')}
+${c.marken.slice(4).map(m => brandRow(c, m)).join('\n')}
         </ul>
-        <ul class="brand-rows span-6 start-7">
-${c.marken.slice(4 + Math.ceil((c.marken.length - 4) / 2)).map(m => brandRow(c, m)).join('\n')}
-        </ul>
+        <figure class="pl-photo pl-photo--end span-6 start-7" style="--pl-r: 1"><img src="${img(c.hero)}" alt="${c.heroAlt}" loading="lazy" data-source="client" data-subject="${c.name}"></figure>
       </div>` : ''}
     </div>
   </section>
@@ -449,7 +447,7 @@ page({
   current: 'leistungen',
   moments: [],
   comment: 'type: place. Leistungen: Hero, 34 Vorführ-Zonen (story), vier Leistungen.',
-  main: `${heroPlace({ photo: 'lei-hero', alt: 'Meridian Ellipse Lautsprecher auf einem Baumstumpf neben einem Samtsessel', h1: 'Beratung, Planung und Installation', lead: 'Von der ersten Hörprobe bis zur Feinabstimmung, auch für Architekten und Bauherren.', btn: HAUPT, href: HAUPT_HREF, pos: '50% 55%' })}
+  main: `${heroPlace({ photo: 'lei-hero', alt: 'Meridian Ellipse Lautsprecher auf einem Baumstumpf neben einem Samtsessel', h1: 'Beratung, Planung und Installation', lead: '34 Vorführ-Zonen, Planung mit Architekten, Installation und Service aus einer Hand.', btn: HAUPT, href: HAUPT_HREF, pos: '50% 55%' })}
 
   <section class="section" id="zonen" aria-labelledby="zonen-h">
     <div class="wrap grid grid--top">
@@ -536,9 +534,9 @@ page({
   current: '',
   moments: [],
   comment: 'type: place. Produktanfrage: Hero, Formular neben Foto.',
-  main: `${heroPlace({ photo: 'relax-3', alt: 'Eine Frau sitzt entspannt am Fenster und hört Musik', h1: 'Produktinfos, Preislisten und Datenblätter', lead: `Schreiben Sie uns, wir schicken Ihnen alles zu. Oder rufen Sie an: ${firma.telefon}.`, btn: 'Zum Formular', href: '#formular', pos: '50% 45%' })}
+  main: `${heroPlace({ photo: 'relax-2', alt: 'Ein Mann entspannt mit verschränkten Armen auf dem Sofa und hört Musik', h1: 'Produktinfos, Preislisten und Datenblätter', lead: `Schreiben Sie uns, wir schicken Ihnen alles zu. Oder rufen Sie an: ${firma.telefon}.`, btn: 'Zum Formular', href: '#formular', pos: '50% 45%' })}
 
-  <section class="section" id="formular" aria-labelledby="formular-h">
+  <section class="section free" id="formular" aria-labelledby="formular-h">
     <div class="wrap grid grid--top">
       <div class="span-6 stack-5">
         <h2 id="formular-h">Ihre Produktanfrage</h2>
@@ -617,7 +615,7 @@ page({
 const legal = (file, title, description, h1, body) => page({
   file, title, description, current: '', moments: [],
   comment: 'type: place. Rechtliche Seite, nur Text.',
-  main: `  <section class="section legal" aria-labelledby="legal-h">
+  main: `  <section class="section legal free" aria-labelledby="legal-h">
     <div class="wrap">
       <div class="legal__body measure">
         <h1 id="legal-h">${h1}</h1>

@@ -154,7 +154,7 @@ export const kategorien = [
         ['ps-majik', 'Linn Majik LP12 in Klavierlack Schwarz von vorne', 'Majik LP12 in Schwarz'],
       ],
     },
-    schluss: 'ps-loft', schlussAlt: 'Linn Selekt LP12 auf einem Rattan-Sideboard vor einer Ziegelwand',
+    schluss: 'ps-selekt-playing', schlussAlt: 'Linn Selekt LP12 in Grau mit laufender Schallplatte',
     marken: [
       ['Linn', 'Analoge Perfektion', 'Der Sondek LP12 mit modularer Bauweise und vielen Upgrades. Majik, Selekt und Klimax sind drei Einstiegsstufen.'],
       ['Rega', 'Vinylkultur mit britischem Feinsinn', 'Hochwertig verarbeitete Plattenspieler wie der Planar 3 RS, für Einsteiger und erfahrene Hörer.'],

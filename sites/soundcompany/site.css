@@ -120,13 +120,28 @@
 
 /* Markenliste auf den Kategorieseiten: Logo links, Text rechts, Linien dazwischen */
 .brand-rows { list-style: none; margin: 0; padding: 0; display: grid; }
-.brand-row { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: var(--s-5); padding: var(--s-4) 0; border-top: 1px solid var(--line); align-items: start; }
+.brand-row { display: grid; grid-template-columns: minmax(0, 1fr) 120px; gap: var(--s-5); padding: var(--s-4) 0; border-top: 1px solid var(--line); align-items: start; }
 .brand-row:first-child { border-top: 0; padding-top: 0; }
 .brand-rows.span-6:nth-child(2) > .brand-row:first-child, .group + .grid .brand-row:first-child { border-top: 1px solid var(--line); padding-top: var(--s-4); }
-.brand-row__logo { height: 32px; display: flex; align-items: center; }
+.brand-row__logo { order: 2; height: 32px; display: flex; align-items: center; justify-content: flex-end; }
 .brand-row__logo img { max-height: 28px; max-width: 110px; width: auto; height: auto; }
 .brand-row__word { font: 600 18px/1 var(--font-display); letter-spacing: -0.02em; }
 .brand-row__text h3 { margin: 0 0 var(--s-1); font: 600 18px/1.4 var(--font-text); }
 .brand-row__text p { margin: 0; }
 .brand-row__text .link { display: inline-block; margin-top: var(--s-2); }
-@media (max-width: 639px) { .brand-row { grid-template-columns: minmax(0, 1fr); gap: var(--s-2); } }
+@media (max-width: 639px) { .brand-row { grid-template-columns: minmax(0, 1fr) 88px; gap: var(--s-3); } .brand-row__logo img { max-width: 84px; } }
+
+/* Abschnitte, die mit ihrem Inhalt wachsen (Formular, Rechtstexte) */
+main > section.free { height: auto !important; min-height: 100svh; }
+/* Leistungen: flachere Fotos, damit zwei Kacheln in einen Bildschirm passen */
+#leistungen .tile__media { --tile-ratio: 16 / 9; }
+/* HiFi-Systeme: Foto unter der Liste auf schmalen Bildschirmen */
+@media (max-width: 1023px) {
+  #bereiche .grid.fill { display: grid; }
+  #bereiche .frame--fill { position: relative; height: auto; aspect-ratio: 4 / 3; min-height: 0; flex: none; }
+}
+.closing__cta, .closing__links { min-width: 0; }
+@media (max-width: 400px) { .btn--xl { white-space: normal; text-align: left; } .closing__cta.close--type .btn--xl { width: 100%; } }
+#bereiche .rows > li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--s-4); }
+#bereiche .rows > li > p { grid-column: 1 / -1; grid-row: 2; margin: 0; }
+@media (max-width: 1023px) { #bereiche .grid.fill { grid-template-columns: minmax(0, 1fr); } #bereiche .grid.fill > * { grid-column: 1 / -1; min-width: 0; } }
