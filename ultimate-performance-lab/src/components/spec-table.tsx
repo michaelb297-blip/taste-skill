@@ -75,7 +75,7 @@ export function SpecTable({ vehicle }: { vehicle: Vehicle }) {
   const missing = groups.flatMap((g) => g.rows).filter((r) => r[1] == null).length;
   return (
     <div>
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {groups.map((g) => (
           <Card key={g.title} className="overflow-hidden">
             <p className="eyebrow border-b border-line-soft px-4 py-3">{g.title}</p>

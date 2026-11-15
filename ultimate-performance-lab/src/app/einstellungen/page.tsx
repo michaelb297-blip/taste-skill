@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { LegalBlock } from "@/components/result-parts";
 import { Button, Card, Field, inputCls, LinkButton, Notice, PageHeader, SectionTitle } from "@/components/ui";
+import { isStatic } from "@/lib/client/env";
 import { useApp } from "@/lib/client/store";
 
 interface Health {
@@ -33,6 +34,8 @@ export default function SettingsPage() {
   const [health, setHealth] = useState<Health | null>(null);
   const [name, setName] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
+  const [confirmClear, setConfirmClear] = useState(false);
+  const stat = isStatic();
   useEffect(() => {
     fetch("/api/health").then((r) => r.json()).then(setHealth).catch(() => {});
   }, []);
@@ -47,7 +50,7 @@ export default function SettingsPage() {
           <SectionTitle>Benutzerkonto</SectionTitle>
           {user ? (
             <Card className="space-y-4 p-4 md:p-5">
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Field label="Name"><input className={inputCls} value={name} onChange={(e) => setName(e.target.value)} /></Field>
                 <Field label="E-Mail-Adresse"><input className={`${inputCls} text-muted`} value={user.email} readOnly /></Field>
               </div>
@@ -72,11 +75,13 @@ export default function SettingsPage() {
             </Card>
           ) : (
             <Card className="p-4 md:p-5">
-              <p className="text-sm text-fg-2">Du nutzt den Gastmodus. Simulationen funktionieren ohne Konto; Garage und Einstellungen liegen lokal auf diesem Gerät ({garage.length} Einträge, {customVehicles.length} eigene Fahrzeuge).</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <LinkButton href="/konto/anmelden" variant="primary">Anmelden</LinkButton>
-                <LinkButton href="/konto/registrieren">Konto erstellen</LinkButton>
-              </div>
+              <p className="text-sm text-fg-2">{stat ? "Diese private Web-App läuft ohne Server und ohne Konto." : "Du nutzt den Gastmodus. Simulationen funktionieren ohne Konto;"} Garage und Einstellungen liegen lokal in diesem Browser ({garage.length} Einträge, {customVehicles.length} eigene Fahrzeuge).</p>
+              {!stat && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <LinkButton href="/konto/anmelden" variant="primary">Anmelden</LinkButton>
+                  <LinkButton href="/konto/registrieren">Konto erstellen</LinkButton>
+                </div>
+              )}
             </Card>
           )}
         </section>
@@ -98,8 +103,8 @@ export default function SettingsPage() {
                 <div className="flex items-start gap-3 px-4 py-3.5 md:px-5">
                   <span className={clsx("mt-1.5 size-2 shrink-0 rounded-full", health.database.status === "ok" ? "bg-ok" : "bg-bad")} />
                   <div>
-                    <p className="text-sm">Datenbank: {health.database.mode === "postgres" ? "PostgreSQL / Supabase" : "Eingebettetes Postgres (PGlite)"}</p>
-                    <p className="text-xs text-muted">{health.database.status === "ok" ? (health.database.mode === "postgres" ? "Verbunden über DATABASE_URL." : "Lokaler Modus ohne DATABASE_URL – Daten liegen im Ordner .data.") : health.database.status}</p>
+                    <p className="text-sm">{health.database.mode === "browser" ? "Speicher: Browser dieses Geräts" : `Datenbank: ${health.database.mode === "postgres" ? "PostgreSQL / Supabase" : "Eingebettetes Postgres (PGlite)"}`}</p>
+                    <p className="text-xs text-muted">{health.database.mode === "browser" ? "Keine Server-Datenbank in dieser Version." : health.database.status === "ok" ? (health.database.mode === "postgres" ? "Verbunden über DATABASE_URL." : "Lokaler Modus ohne DATABASE_URL – Daten liegen im Ordner .data.") : health.database.status}</p>
                   </div>
                 </div>
                 {health.providers.map((p) => (
@@ -130,13 +135,17 @@ export default function SettingsPage() {
             <p className="text-sm text-fg-2">Aktives Fahrzeug, Verlauf, eigene Fahrzeuge und Gast-Garage aus diesem Browser entfernen.</p>
             <Button
               className="shrink-0"
+              variant={confirmClear ? "heat" : "ghost"}
               onClick={() => {
-                if (!window.confirm("Alle lokal gespeicherten Daten dieses Browsers löschen?")) return;
-                for (const k of ["upl.vehicle", "upl.recent", "upl.custom", "upl.garage", "upl.settings"]) localStorage.removeItem(k);
+                // zweistufig statt confirm(): Dialoge sind nicht überall verfügbar
+                if (!confirmClear) return setConfirmClear(true);
+                try {
+                  for (const k of ["upl.vehicle", "upl.recent", "upl.custom", "upl.garage", "upl.settings"]) localStorage.removeItem(k);
+                } catch {}
                 window.location.reload();
               }}
             >
-              Lokale Daten löschen
+              {confirmClear ? "Wirklich löschen" : "Lokale Daten löschen"}
             </Button>
           </Card>
         </section>

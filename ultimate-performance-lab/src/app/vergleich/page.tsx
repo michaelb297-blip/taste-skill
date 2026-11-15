@@ -152,7 +152,7 @@ export default function ComparePage() {
 
           <section>
             <SectionTitle hint="Balken relativ zum besten Wert">Performance-Vergleich</SectionTitle>
-            <div className="grid gap-3 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
               {bars.map((b) => {
                 const vals = sims.map((x) => b.get(x.r));
                 const nums = vals.filter((n): n is number => n != null);

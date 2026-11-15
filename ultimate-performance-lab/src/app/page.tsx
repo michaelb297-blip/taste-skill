@@ -31,7 +31,7 @@ export default function Dashboard() {
 
       <section>
         <SectionTitle hint="Serie → Stage 1">Ausgearbeitete Modelle</SectionTitle>
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {featured.map(({ v, sim }, i) => (
             <OpenVehicleButton key={v.id} id={v.id} className="card group p-5 text-left transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-line">
               <div className="flex items-start justify-between gap-3">
@@ -76,7 +76,7 @@ export default function Dashboard() {
         </div>
       </section>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <section>
           <SectionTitle>Vergleiche</SectionTitle>
           <Card className="divide-y divide-line-soft">
@@ -114,7 +114,7 @@ export default function Dashboard() {
 
       <section>
         <SectionTitle hint="aus den Motormodellen">Technik im Fokus</SectionTitle>
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {focus.map(({ v, m }) => (
             <Card key={v.id} className="p-5">
               <p className="eyebrow">{m.familyName}</p>

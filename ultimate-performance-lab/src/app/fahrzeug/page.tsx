@@ -25,7 +25,7 @@ export default function VehicleOverviewPage() {
 
   return (
     <div className="space-y-8">
-      <header className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start">
+      <header className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start">
         <div>
           <p className="eyebrow">
             {v.brand} · {v.model}

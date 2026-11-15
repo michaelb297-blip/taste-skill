@@ -58,7 +58,7 @@ export function ResearchPanel({ vehicle }: { vehicle: Vehicle }) {
 
           <Card className="p-4">
             <p className="eyebrow mb-3">Datenquellen</p>
-            <ul className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
+            <ul className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
               {report.providers.map((p) => (
                 <li key={p.id} className="flex items-start gap-2.5 text-[0.8125rem]">
                   <span className={clsx("mt-1.5 size-1.5 shrink-0 rounded-full", p.ok ? "bg-ok" : p.configured ? "bg-bad" : "bg-line")} />

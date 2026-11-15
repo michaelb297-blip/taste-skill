@@ -149,7 +149,7 @@ export default function DynoPage() {
       </PageHeader>
       <VehicleBar />
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
         {/* Prüfstandsszene */}
         <Card className="relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(47,140,255,.14),transparent)]" />

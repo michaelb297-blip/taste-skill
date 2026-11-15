@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { PageSkeleton } from "@/components/no-vehicle";
 import { Card, Chip, LinkButton, Notice, PageHeader, SectionTitle } from "@/components/ui";
 import { dateDe, euroRange, nf } from "@/lib/client/format";
+import { isStatic } from "@/lib/client/env";
 import { useApp, type GarageItem, type GarageKind } from "@/lib/client/store";
 import { PROFILES } from "@/lib/engine/profiles";
 import { STAGE_LABEL, type ProfileId, type StageId, type Vehicle } from "@/lib/types";
@@ -38,15 +39,17 @@ export default function GaragePage() {
     if (p.vehicle) setVehicle(p.vehicle as Vehicle);
     else if (!(await selectVehicle(String(p.vehicleId)))) return;
     if (g.kind === "konfiguration") {
-      sessionStorage.setItem("upl.loadConfig", JSON.stringify({ vehicleId: p.vehicleId, config: p.config }));
+      try {
+        sessionStorage.setItem("upl.loadConfig", JSON.stringify({ vehicleId: p.vehicleId, config: p.config }));
+      } catch {}
       router.push("/konfigurator");
     } else router.push(g.kind === "simulation" ? "/simulator" : "/fahrzeug");
   };
 
   return (
     <div>
-      <PageHeader eyebrow="Meine Garage" title="Gespeicherte Fahrzeuge und Simulationen" actions={!user ? <LinkButton href="/konto/anmelden" variant="primary">Anmelden</LinkButton> : undefined}>
-        {user ? `Gespeichert im Konto von ${user.name} – auf allen Geräten verfügbar.` : "Gastmodus: Einträge liegen nur auf diesem Gerät. Nach der Anmeldung werden sie in dein Konto übernommen."}
+      <PageHeader eyebrow="Meine Garage" title="Gespeicherte Fahrzeuge und Simulationen" actions={!user && !isStatic() ? <LinkButton href="/konto/anmelden" variant="primary">Anmelden</LinkButton> : undefined}>
+        {user ? `Gespeichert im Konto von ${user.name} – auf allen Geräten verfügbar.` : isStatic() ? "Einträge liegen in diesem Browser auf diesem Gerät." : "Gastmodus: Einträge liegen nur auf diesem Gerät. Nach der Anmeldung werden sie in dein Konto übernommen."}
       </PageHeader>
 
       <div className="scroll-x -mx-4 mb-5 flex gap-2 px-4 md:mx-0 md:px-0">
@@ -62,7 +65,7 @@ export default function GaragePage() {
           {garage.length === 0 && <div className="mt-5"><LinkButton href="/fahrzeuge" variant="primary">Fahrzeug auswählen</LinkButton></div>}
         </Card>
       ) : (
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {items.map((g) => {
             const p = g.payload;
             return (
@@ -103,7 +106,7 @@ export default function GaragePage() {
       {history.length > 0 && (
         <section className="mt-8">
           <SectionTitle hint="aus gespeicherten Simulationen">Performance-Verläufe</SectionTitle>
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {history.map(({ id, list }) => {
               const max = Math.max(...list.map((g) => g.payload.ps as number));
               return (
@@ -124,7 +127,7 @@ export default function GaragePage() {
         </section>
       )}
 
-      {!user && garage.length > 0 && <div className="mt-6"><Notice>Gast-Einträge gehen verloren, wenn die Browserdaten gelöscht werden. Mit einem Konto bleiben sie erhalten.</Notice></div>}
+      {!user && !isStatic() && garage.length > 0 && <div className="mt-6"><Notice>Gast-Einträge gehen verloren, wenn die Browserdaten gelöscht werden. Mit einem Konto bleiben sie erhalten.</Notice></div>}
     </div>
   );
 }

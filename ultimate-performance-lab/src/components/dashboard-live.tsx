@@ -3,6 +3,7 @@
 import { ArrowUpRight, Clock, Warehouse } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { isStatic } from "@/lib/client/env";
 import { useApp } from "@/lib/client/store";
 import { dateDe } from "@/lib/client/format";
 import { Card, SectionTitle } from "./ui";
@@ -15,7 +16,7 @@ export function RecentAndGarage() {
     if (await selectVehicle(id)) router.push("/fahrzeug");
   };
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
       <section>
         <SectionTitle hint={recent.length ? `${recent.length} Fahrzeuge` : undefined}>Zuletzt simuliert</SectionTitle>
         <Card className="divide-y divide-line-soft">
@@ -44,7 +45,7 @@ export function RecentAndGarage() {
           <div>
             <p className="num text-3xl font-semibold">{garage.length}</p>
             <p className="mt-1 text-sm text-fg-2">{garage.length === 1 ? "gespeicherter Eintrag" : "gespeicherte Einträge"}</p>
-            <p className="mt-1 text-xs text-muted">{user ? `Im Konto von ${user.name}` : "Gastmodus – lokal auf diesem Gerät"}</p>
+            <p className="mt-1 text-xs text-muted">{user ? `Im Konto von ${user.name}` : isStatic() ? "Lokal in diesem Browser" : "Gastmodus – lokal auf diesem Gerät"}</p>
           </div>
         </Link>
       </section>

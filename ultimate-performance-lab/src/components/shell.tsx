@@ -5,6 +5,7 @@ import { Activity, CarFront, Database, GitCompareArrows, LayoutDashboard, Menu, 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
+import { isStatic } from "@/lib/client/env";
 import { useApp, vehicleSubtitle, vehicleTitle } from "@/lib/client/store";
 
 const NAV = [
@@ -73,13 +74,13 @@ export function AppShell({ children }: { children: ReactNode }) {
               <span className="block truncate text-xs text-muted">{vehicleSubtitle(vehicle)}</span>
             </Link>
           )}
-          <Link href={user ? "/einstellungen" : "/konto/anmelden"} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-fg-2 transition-colors hover:bg-surface hover:text-fg">
+          <Link href={user || isStatic() ? "/einstellungen" : "/konto/anmelden"} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-fg-2 transition-colors hover:bg-surface hover:text-fg">
             <span className="flex size-8 items-center justify-center rounded-full bg-raised text-muted">
               <UserRound className="size-4" />
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-fg">{user ? user.name : "Gastmodus"}</span>
-              <span className="block truncate text-xs text-muted">{user ? user.email : "Anmelden oder registrieren"}</span>
+              <span className="block truncate text-fg">{user ? user.name : isStatic() ? "Private Web-App" : "Gastmodus"}</span>
+              <span className="block truncate text-xs text-muted">{user ? user.email : isStatic() ? "Daten liegen in diesem Browser" : "Anmelden oder registrieren"}</span>
             </span>
           </Link>
         </div>

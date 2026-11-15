@@ -8,7 +8,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "node e2e/smoke.cjs"
+    "test:e2e": "node e2e/smoke.cjs",
+    "build:static": "next build && node static/build.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.16",
@@ -30,6 +31,7 @@
     "@types/pg": "^8.23.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
     "postcss": "^8.5.33",
     "tailwindcss": "^4.3.5",
     "typescript": "^7.0.2",

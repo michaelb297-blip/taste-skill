@@ -83,7 +83,7 @@ export default function ConfiguratorPage() {
         ))}
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
         <div className="space-y-4">
           {slots.map((s) => (
             <fieldset key={s.slot} className="card p-4 md:p-5">
@@ -182,7 +182,7 @@ export default function ConfiguratorPage() {
                 ))}
               </div>
             </Card>
-            <div className="grid gap-4 lg:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
               <LoadPanel r={result} model={sim.model} />
               <CostTable costs={result.evaluation.costs} />
             </div>

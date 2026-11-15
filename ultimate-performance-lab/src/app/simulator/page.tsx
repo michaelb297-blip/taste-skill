@@ -137,7 +137,7 @@ export default function SimulatorPage() {
             ))}
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
             <Card className="relative overflow-hidden p-5 md:p-6">
               <div className="absolute -right-20 -top-24 size-64 rounded-full blur-[90px]" style={{ background: `${STAGE_COLOR[stage]}33` }} />
               <div className="relative">
@@ -209,7 +209,7 @@ export default function SimulatorPage() {
           <p className="mt-2 text-xs text-muted">Beschleunigungswerte bei Volllast mit der Schalt- und Anfahrstrategie des jeweiligen Profils (simuliert). Verbrauch: Schätzung bei gleicher Fahrweise.</p>
         </section>
 
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <section>
             <SectionTitle hint={r.label}>Benötigte Komponenten</SectionTitle>
             <HardwareList e={r.evaluation} model={sim.model} />

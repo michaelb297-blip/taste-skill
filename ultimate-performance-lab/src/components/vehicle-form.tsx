@@ -56,7 +56,7 @@ export function VehicleForm({ initialBrand = "", initialModel = "", onSave }: { 
   return (
     <form onSubmit={submit} className="space-y-5" noValidate>
       <Notice>Pflicht sind Marke, Modell, Leistung, Drehmoment und Leergewicht. Alles Weitere verbessert die Simulation; fehlende Werte ersetzt die Engine durch gekennzeichnete Annahmen.</Notice>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <Field label="Marke"><input className={inputCls} value={f.brand} onChange={(e) => set("brand", e.target.value)} required /></Field>
         <Field label="Modell"><input className={inputCls} value={f.model} onChange={(e) => set("model", e.target.value)} required /></Field>
         <Field label="Generation"><input className={inputCls} value={f.generation} onChange={(e) => set("generation", e.target.value)} placeholder="optional" /></Field>
