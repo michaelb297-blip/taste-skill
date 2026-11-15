@@ -1,0 +1,132 @@
+/* SOUND COMPANY: Seiten-CSS über dem Kit (system.css, layout.css).
+   Kundenwunsch: ein ruhiger, heller Stil nach Art von apple.com. Darum hier, abweichend von den
+   Place-Vorgaben des Kits: weiche Ecken (18px) statt eckiger Fotos, Pill-Buttons, etwas größere,
+   halbfette Überschriften. Alles andere bleibt beim System. */
+
+:root[data-type="place"] {
+  --r-sm: 10px; --r-md: 18px; --r-lg: 18px; --r-btn: 999px;
+  --t-h1: clamp(34px, 2.2vw + 18px, 56px);
+  --t-h2: clamp(28px, 1.2vw + 18px, 40px);
+  --display-weight: 600;
+  --display-tracking: -0.025em;
+}
+:root[data-type="place"] :is(h1, h2, .t-h1, .t-h2) { font-weight: 600; }
+
+/* Logo */
+.nav__logo .logo { display: block; height: 34px; width: auto; }
+@media (max-width: 639px) { .nav__logo .logo { height: 28px; } }
+
+/* runde Fotos wie die Kacheln */
+.pl-photo > img, .frame--photo, .close__media, .close__media img, .tile__media { border-radius: var(--r-lg); overflow: clip; }
+.hero--place > .hero__bg { border-radius: 0; }
+.photo-link { display: block; color: inherit; }
+.photo-link > img { transition: transform 600ms var(--ease, ease); }
+.photo-link:hover > img { transform: scale(1.03); }
+
+/* Produktfotos auf Weiß: ganz zeigen, nicht beschneiden */
+.tile--product .tile__media { background: #fff; }
+.tile--product .tile__media > img { object-fit: contain; padding: var(--s-5); }
+
+/* das Adress-Moment unter "So finden Sie uns" */
+.type-moment { margin: 0 0 var(--s-6); font: var(--display-weight) clamp(30px, 4.4vw, 64px)/1.05 var(--font-display); letter-spacing: -0.03em; }
+.type-moment a { display: inline-block; color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .12em; text-decoration-color: transparent; transition: text-decoration-color 300ms var(--ease, ease); }
+.type-moment a:hover, .type-moment a:focus-visible { text-decoration-color: currentColor; }
+
+/* Markenkarten auf den Kategorieseiten */
+.brand-grid { row-gap: var(--s-5); align-content: start; }
+.brand-card { display: grid; gap: var(--s-3); align-content: start; padding: var(--s-6); background: var(--p-surface); border-radius: var(--r-lg); }
+.brand-card h3 { margin: 0; font: 600 var(--t-card)/1.3 var(--font-text); letter-spacing: -0.01em; }
+.brand-card p { margin: 0; }
+.brand-card__claim { color: var(--muted); }
+.brand-card .link { margin-top: var(--s-2); justify-self: start; }
+
+/* Bildreihe */
+.strip { row-gap: var(--s-5); }
+.strip__item { margin: 0; display: grid; gap: var(--s-4); align-content: start; }
+.strip__media { aspect-ratio: 4 / 5; border-radius: var(--r-lg); overflow: clip; background: #fff; }
+.strip__media img { width: 100%; height: 100%; object-fit: cover; }
+.strip__item .t-card { margin: 0; }
+@media (max-width: 639px) { .strip > .span-3 { grid-column: span 6; } }
+
+/* Angebote */
+.offer-group > .t-label { margin: 0 0 var(--s-3); font-weight: 500; color: var(--ink); }
+.rows .rows__name small { display: block; font-weight: 400; color: var(--muted); font-size: 16px; }
+.rows__value { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Kundenstimmen und Markenliste */
+.quote blockquote { margin: 0; font-size: var(--t-lead); line-height: 1.5; }
+.quote { margin: 0; display: grid; gap: var(--s-4); align-content: start; }
+.brands { margin: var(--s-4) 0 0; max-width: 72ch; color: var(--ink); }
+.brands .t-label { display: block; margin-bottom: var(--s-2); color: var(--muted); }
+
+/* Formulare auf grauer Fläche */
+.form-panel { background: var(--p-bg); border-radius: var(--r-lg); padding: var(--s-7); }
+.ground-surface .form-panel { background: var(--p-bg); }
+:not(.ground-surface) > .wrap .form-panel { background: var(--p-surface); }
+.form select, .form textarea { width: 100%; font: 16px/1.5 var(--font-text); }
+@media (max-width: 639px) { .form-panel { padding: var(--s-5); } }
+
+/* Footer-Kontakt */
+.footer__contact { font-style: normal; line-height: 1.9; }
+
+/* Rechtliche Seiten */
+.legal { padding-top: calc(var(--nav) + var(--s-8)); }
+.legal__body h1 { margin: 0 0 var(--s-7); font-size: var(--t-h1); }
+.legal__body h2 { margin: var(--s-7) 0 var(--s-3); font-size: var(--t-h3); }
+.legal__body p { margin: 0 0 var(--s-4); line-height: 1.7; }
+.legal__dl { display: grid; grid-template-columns: minmax(0, 14em) minmax(0, 1fr); gap: var(--s-2) var(--s-5); margin: 0; }
+.legal__dl dt { color: var(--muted); }
+.legal__dl dd { margin: 0; }
+@media (max-width: 639px) { .legal__dl { grid-template-columns: minmax(0, 1fr); } .legal__dl dd { margin-bottom: var(--s-3); } }
+
+/* Über-uns-Statement: mittig im Bildschirm, groß wie eine Produktzeile bei Apple */
+#ueber-uns > .wrap { min-height: calc(100svh - var(--padt) - var(--padb) - var(--bar)); display: flex; flex-direction: column; justify-content: center; gap: var(--s-5); }
+#ueber-uns .mo-wh__text { font-size: clamp(30px, 2.4vw + 12px, 52px); line-height: 1.12; max-width: 22ch; margin: 0; }
+#ueber-uns .t-label { margin: 0; color: var(--muted); }
+
+/* Kundenstimmen untereinander, durch Linien getrennt */
+.stimmen { display: grid; }
+.stimmen .quote { padding: var(--s-5) 0; border-top: 1px solid var(--line); }
+.stimmen .quote:first-child { border-top: 0; padding-top: 0; }
+.footer__legal-links { display: inline-flex; gap: var(--s-4); }
+@media (max-width: 639px) { .footer__legal-links { display: grid; gap: var(--s-2); flex-basis: 100%; width: 100%; justify-items: start; } }
+
+/* Handy: Produktkacheln flacher, damit der Abschnitt in zwei Bildschirme passt */
+@media (max-width: 639px) { #produkte .tile__media { --tile-ratio: 16 / 9; } }
+@media (max-width: 639px) {
+  #angebote .pl-photo { --pl-r: .7 !important; }
+  #stimmen .pl-photo { --pl-r: 2.4 !important; }
+  #stimmen .quote blockquote { font-size: 16px; }
+  #stimmen .stimmen .quote { padding: var(--s-4) 0; }
+  #stimmen .stimmen .quote:first-child { padding-top: 0; }
+}
+
+/* alter Preis durchgestrichen neben dem Angebotspreis */
+.rows__value .was { color: var(--muted); margin-right: var(--s-2); text-decoration-thickness: 1px; }
+@media (max-width: 1023px) {
+  .rows__value .was { display: block; margin: 0; }
+  .rows__value { text-align: right; }
+}
+#angebote .offer-group .rows > li { min-height: 72px; }
+
+/* Markenlogos in den Karten */
+.brand-card__logo { height: 40px; display: flex; align-items: center; }
+.brand-card__logo img { max-height: 40px; max-width: 140px; width: auto; height: auto; }
+.brand-card__word { font: 600 20px/1 var(--font-display); letter-spacing: -0.02em; }
+.form__note { color: var(--ink); }
+#termin .pl-photo { margin-top: var(--s-4); }
+/* großer Schluss-Button auf sehr schmalen Handys */
+@media (max-width: 400px) { .btn--xl { font-size: 18px; padding-inline: var(--s-5); } }
+
+/* Markenliste auf den Kategorieseiten: Logo links, Text rechts, Linien dazwischen */
+.brand-rows { list-style: none; margin: 0; padding: 0; display: grid; }
+.brand-row { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: var(--s-5); padding: var(--s-4) 0; border-top: 1px solid var(--line); align-items: start; }
+.brand-row:first-child { border-top: 0; padding-top: 0; }
+.brand-rows.span-6:nth-child(2) > .brand-row:first-child, .group + .grid .brand-row:first-child { border-top: 1px solid var(--line); padding-top: var(--s-4); }
+.brand-row__logo { height: 32px; display: flex; align-items: center; }
+.brand-row__logo img { max-height: 28px; max-width: 110px; width: auto; height: auto; }
+.brand-row__word { font: 600 18px/1 var(--font-display); letter-spacing: -0.02em; }
+.brand-row__text h3 { margin: 0 0 var(--s-1); font: 600 18px/1.4 var(--font-text); }
+.brand-row__text p { margin: 0; }
+.brand-row__text .link { display: inline-block; margin-top: var(--s-2); }
+@media (max-width: 639px) { .brand-row { grid-template-columns: minmax(0, 1fr); gap: var(--s-2); } }
